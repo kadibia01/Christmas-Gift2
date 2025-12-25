@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merry Christmas Mummy!</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #060d13;
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Snowflakes Animation */
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            position: fixed;
+            top: -10%;
+            z-index: 9999;
+            user-select: none;
+            cursor: default;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+
+        /* Slideshow Container */
+        #slideshow {
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            border: 5px solid #d4af37;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 1.5s;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        h1 { color: #ff4d4d; text-shadow: 2px 2px #000; }
+        p { font-size: 1.5rem; line-height: 1.6; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Play Button (Browsers require a click to play music) */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        button {
+            padding: 20px 40px;
+            font-size: 1.5rem;
+            background: #b30000;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <button onclick="startShow()">🎁 Click to Open Your Gift, Mummy! 🎁</button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="slideshow">
+        <div class="slide">
+            <h1>Merry Christmas, Mummy!</h1>
+            <img src="pic1.jpg" alt="Christmas Tree">
+            <p>You are the heart of our home. Wishing you a day filled with love! 🎄</p>
+        </div>
+
+        <div class="slide">
+            <h1>A Special Message</h1>
+            <img src="pic2.jpg" alt="Gifts">
+            <p>Mummy, you welcome! Have a message for you: You deserve all the joy in the world. 🎁</p>
+        </div>
+
+        <div class="slide">
+            <h1>Beautiful Memories</h1>
+            <img src="pic3.jpg" alt="Family Photo">
+            <p>Thank you for everything you do. You make every Christmas magical. ✨</p>
+        </div>
+
+        <div class="slide">
+            <h1>Happy New Year 2026</h1>
+            <img src="pic4.jpg" alt="Fireworks">
+            <p>May the coming year bring you health, wealth, and endless smiles! 🥂</p>
+        </div>
+
+        <div class="slide">
+            <h1>We Love You!</h1>
+            <img src="pic5.jpg" alt="Love">
+            <p>Merry Christmas and a Happy New Year to the best Mummy ever! ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // Snowflake logic
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random();
+            document.body.appendChild(snowflake);
+            setTimeout(() => { snowflake.remove(); }, 5000);
+        }
+        setInterval(createSnowflake, 100);
+
+        // Slideshow logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlides() {
+            slides.forEach(s => s.style.display = "none");
+            currentSlide++;
+            if (currentSlide > slides.length) { currentSlide = 1; }
+            slides[currentSlide - 1].style.display = "block";
+            setTimeout(showSlides, 5000); // Change image every 5 seconds
+        }
+
+        function startShow() {
+            document.getElementById('overlay').style.display = 'none';
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(error => console.log("Audio needs interaction"));
+            showSlides();
+        }
+    </script>
+</body>
+</html>
